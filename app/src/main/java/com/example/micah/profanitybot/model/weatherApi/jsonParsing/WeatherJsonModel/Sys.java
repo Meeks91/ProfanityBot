@@ -1,4 +1,4 @@
-package com.example.micah.profanitybot.WeatherRetrieval.WeatherJsonModel;
+package com.example.micah.profanitybot.model.weatherApi.jsonParsing.WeatherJsonModel;
 
 public class Sys {
 

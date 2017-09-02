@@ -1,4 +1,4 @@
-package com.example.micah.profanitybot.API_AI;
+package com.example.micah.profanitybot.model.API_AI;
 
 import android.app.*;
 import android.content.Context;
@@ -7,10 +7,8 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 
-import com.example.micah.profanitybot.*;
 import com.example.micah.profanitybot.Application;
 
-import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -57,7 +55,7 @@ public class SpeechSynthesiser implements  Application.ActivityLifecycleCallback
                 if (status == TextToSpeech.SUCCESS) {
 
                     //set the textToSpeechEngine and get the result
-                    int result = textToSpeechEngine.setLanguage(Locale.UK);
+                    int result = textToSpeechEngine.setLanguage(Locale.US);
 
                     //check if we set the language successfully
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {

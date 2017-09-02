@@ -1,11 +1,9 @@
-package com.example.micah.profanitybot.Presenter;
+package com.example.micah.profanitybot;
 
-import com.example.micah.profanitybot.API_AI.ApiAiListener;
-import com.example.micah.profanitybot.API_AI.OnSpeechFinishedDelegate;
-import com.example.micah.profanitybot.GifRetrieval.GifRetrievalCallback;
-import com.example.micah.profanitybot.GifRetrieval.GifRetriever;
-
-import javax.inject.Inject;
+import com.example.micah.profanitybot.gifRetrieval.GifRetrievalCallback;
+import com.example.micah.profanitybot.gifRetrieval.GifRetriever;
+import com.example.micah.profanitybot.model.API_AI.ApiAiListener;
+import com.example.micah.profanitybot.view.MainActivityViewDelegate;
 
 import ai.api.android.AIService;
 

@@ -1,4 +1,4 @@
-package com.example.micah.profanitybot.GifRetrieval;
+package com.example.micah.profanitybot.gifRetrieval;
 
 import org.json.JSONException;
 import org.json.JSONObject;

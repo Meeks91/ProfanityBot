@@ -1,4 +1,4 @@
-package com.example.micah.profanitybot.GifRetrieval;
+package com.example.micah.profanitybot.gifRetrieval;
 
 public interface GifRetrievalCallback {
 

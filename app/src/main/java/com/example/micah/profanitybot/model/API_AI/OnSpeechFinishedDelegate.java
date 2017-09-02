@@ -1,4 +1,4 @@
-package com.example.micah.profanitybot.API_AI;
+package com.example.micah.profanitybot.model.API_AI;
 
 /**
  * Created by Micah on 18/06/2017.

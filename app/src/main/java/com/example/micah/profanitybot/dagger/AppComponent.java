@@ -1,6 +1,6 @@
-package com.example.micah.profanitybot.Dagger;
+package com.example.micah.profanitybot.dagger;
 
-import com.example.micah.profanitybot.MainActivity;
+import com.example.micah.profanitybot.view.MainActivity;
 
 import dagger.Component;
 

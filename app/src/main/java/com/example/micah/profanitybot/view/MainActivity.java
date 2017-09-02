@@ -1,4 +1,4 @@
-package com.example.micah.profanitybot;
+package com.example.micah.profanitybot.view;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -10,17 +10,20 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.example.micah.profanitybot.Presenter.MainActivityPresenter;
+import com.example.micah.profanitybot.Application;
+import com.example.micah.profanitybot.MainActivityPresenter;
 import com.example.micah.profanitybot.Presenter.MainActivityViewDelegate;
+import com.example.micah.profanitybot.R;
+
 import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
 public class MainActivity extends AppCompatActivity implements MainActivityViewDelegate {
 
     private final String TAG = MainActivity.class.getSimpleName();
-    @Inject MainActivityPresenter mainActivityPresenter;
+    @Inject
+    MainActivityPresenter mainActivityPresenter;
     @BindView(R.id.gifImageView) ImageView gifImageView;
 
     @Override
@@ -88,3 +91,5 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewD
         mainActivityPresenter.getRandomGif();
     }
 }
+
+

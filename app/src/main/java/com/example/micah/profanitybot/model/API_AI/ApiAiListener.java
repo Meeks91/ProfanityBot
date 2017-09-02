@@ -1,10 +1,8 @@
-package com.example.micah.profanitybot.API_AI;
+package com.example.micah.profanitybot.model.API_AI;
 
 import android.util.Log;
 
-
-import com.example.micah.profanitybot.Presenter.MainActivityViewDelegate;
-
+import com.example.micah.profanitybot.view.MainActivityViewDelegate;
 import ai.api.AIListener;
 import ai.api.model.AIError;
 import ai.api.model.AIResponse;

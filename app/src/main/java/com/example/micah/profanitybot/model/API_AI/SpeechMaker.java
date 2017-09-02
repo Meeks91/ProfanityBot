@@ -1,13 +1,10 @@
-package com.example.micah.profanitybot.API_AI;
+package com.example.micah.profanitybot.model.API_AI;
 
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 
-import com.example.micah.profanitybot.MainActivity;
-import com.example.micah.profanitybot.Presenter.MainActivityViewDelegate;
-import com.example.micah.profanitybot.WeatherRetrieval.WeatherInfoCallback;
-import com.example.micah.profanitybot.WeatherRetrieval.WeatherJsonModel.WeatherResponse;
-import com.example.micah.profanitybot.WeatherRetrieval.WeatherRetriever;
+import com.example.micah.profanitybot.model.weatherApi.WeatherApiHelper;
+import com.example.micah.profanitybot.view.MainActivityViewDelegate;
 
 import ai.api.model.AIResponse;
 
@@ -17,12 +14,12 @@ import ai.api.model.AIResponse;
 
 public class SpeechMaker {
 
-    private final String TAG = ApiAiListener.class.getSimpleName();
+    private final String TAG = SpeechMaker.class.getSimpleName();
     private SpeechSynthesiser speechSynthesiser;
-    private WeatherRetriever weatherRetriever;
+    private WeatherApiHelper weatherRetriever;
     private MainActivityViewDelegate mainActivityViewDelegate;
 
-    public SpeechMaker(SpeechSynthesiser speechSynthesiser, WeatherRetriever weatherRetriever, MainActivityViewDelegate mainActivityViewDelegate){
+    public SpeechMaker(SpeechSynthesiser speechSynthesiser, WeatherApiHelper weatherRetriever, MainActivityViewDelegate mainActivityViewDelegate){
 
         //set the global onSpeechFinishedDelegate
         this.mainActivityViewDelegate = mainActivityViewDelegate;
@@ -83,12 +80,9 @@ public class SpeechMaker {
     private void getAndSpeakWeatherData(){
 
         //get the weather info
-        weatherRetriever.getWeather(new WeatherInfoCallback() {
-            @Override
-            public void onWeatherRetrieved(WeatherResponse weatherResponse) {
+        weatherRetriever.getWeather(weatherInfo -> {
 
-                //speak the retrieved weather data
-                speechSynthesiser.convertTextToSpeech(weatherResponse.main.getSpeechRepresentation(), null);
-            }});
+            });
+
     }
 }
