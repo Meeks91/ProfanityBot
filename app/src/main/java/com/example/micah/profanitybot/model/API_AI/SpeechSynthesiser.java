@@ -23,33 +23,32 @@ public class SpeechSynthesiser implements  Application.ActivityLifecycleCallback
 
     public SpeechSynthesiser(Context context) {
 
-        //set the global context
         this.context = context;
 
-        //register for the lifeCycle backs
         registerForLifeCycleCallbacks();
     }
 
     //MARK: -------- INITIALISATION METHODS
 
-    //registers the class to receive lifecycle callbacks. Need to stop the textToSpeech engine in onPause
+    /**
+     * registers the class to receive lifecycle callbacks.
+     */
     private void registerForLifeCycleCallbacks() {
 
         //register the class for callbacks via the Application class
         ((Application) context.getApplicationContext()).registerActivityLifecycleCallbacks(this);
     }
 
-    //initiates the textToSpeechEngine and instantiates the TextToSpeech.OnInitListener
+    /**
+     * initiates the textToSpeechEngine and instantiates the TextToSpeech.OnInitListener
+     */
     private void initTextToSpeechEngine() {
 
         Log.d(TAG, "initTextToSpeechEngine() called");
 
         //init the TextToSpeech and create the TextToSpeech.OnInitListener
-        //Use application content to avoid textToSpeechEngine leaking out of the activity
-        textToSpeechEngine = new TextToSpeech(context.getApplicationContext(), new TextToSpeech.OnInitListener() {
-
-            @Override
-            public void onInit(int status) {
+        //Use application context to avoid textToSpeechEngine leaking out of the activity
+        textToSpeechEngine = new TextToSpeech(context.getApplicationContext(), status -> {
 
                 //check if the initialisation was a success
                 if (status == TextToSpeech.SUCCESS) {
@@ -70,14 +69,20 @@ public class SpeechSynthesiser implements  Application.ActivityLifecycleCallback
                     Log.e("error", "Initilization Failed!");
                 }
             }
-        });
+        );
     }
 
     //MARK: -------- INITIALISATION METHODS
 
     //MARK: -------- textToSpeechEngine OPERATIONAL METHODS
 
-    //method which makes the textToSpeechEngine speak the specified text and sets a progress listener
+    /**
+     * method which makes the textToSpeechEngine speak the specified textToSpeak
+     * and sets a utteranceProgressListener to the textToSpeechEngine
+     *
+     * @param textToSpeak - the text that should be spoken by the textToSpeechEngine
+     * @param utteranceProgressListener  - a callback for the textToSpeechEngine which provides progress updates
+     */
     protected void convertTextToSpeech(String textToSpeak, UtteranceProgressListener utteranceProgressListener) {
 
         //set the utteranceProgressListener
@@ -87,17 +92,16 @@ public class SpeechSynthesiser implements  Application.ActivityLifecycleCallback
         textToSpeechEngine.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null,  "" + System.currentTimeMillis());
     }
 
-    //stops the textToSpeechEngine to save resources
+    /**
+     * stops the textToSpeechEngine to save resources
+     */
     private void stopTheTextToSpeechEngine() {
 
-        Log.d(TAG, "stopTheTextToSpeechEngine() called");
-
-        //stop the textToSpeechEngine - stops the speaking
+        //stop the speaking occuring
         textToSpeechEngine.stop();
 
-        //shutdown the textToSpeechEngine - gets back the resources
+        //get back the resources:
         textToSpeechEngine.shutdown();
-
         textToSpeechEngine = null;
     }
 

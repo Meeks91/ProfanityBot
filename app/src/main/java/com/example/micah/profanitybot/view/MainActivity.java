@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.micah.profanitybot.Application;
 import com.example.micah.profanitybot.MainActivityPresenter;
-import com.example.micah.profanitybot.Presenter.MainActivityViewDelegate;
 import com.example.micah.profanitybot.R;
 
 import javax.inject.Inject;
@@ -33,13 +32,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewD
         ButterKnife.bind(this);
         Application.getAppComponent(this).inject(this);
 
-        //request necessary permissions
         initPermissions();
     }
 
     //MARK: --------------- INITIALISATION METHODS
 
-    //request audio recording permission for api 23+
+    /**
+     * request audio recording permission for api 23+
+     */
     private void initPermissions() {
 
         //check if we have audio recording permission
@@ -57,31 +57,26 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewD
     @Override
     public void onGifRetrieved(final String gifUrl) {
 
-        Log.d(TAG, "onGifRetrieved called: " + gifUrl);
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                Glide.with(MainActivity.this).asGif().load(gifUrl).into(gifImageView);
-            }
-        });
+        //update the gif that's playing
+        runOnUiThread(() -> Glide.with(MainActivity.this).asGif().load(gifUrl).into(gifImageView));
     }
 
     @Override
     public void onSpeechEnded() {
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                Glide.with(MainActivity.this).load(null).into(gifImageView);
-            }
-        });
+        //stop the gif playing
+        runOnUiThread(() -> Glide.with(MainActivity.this).load(null).into(gifImageView));
     }
 
     //MARK: ---------------  USER INPUT ROUTING METHODS
 
+    /**
+     * Called as onClick to start the AI service listening
+     * for speech. It also requests the presenter to
+     * get a random gif
+     *
+     * @param view - the view which triggers this onClick
+     */
     public void startTheAiServiceListeningForSpeech(View view) {
 
         //start the ai service listening for speech
@@ -90,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewD
         //get a gif now that we're listening for to audio
         mainActivityPresenter.getRandomGif();
     }
+
+    //MARK: ---------------  USER INPUT ROUTING METHODS
 }
 
 

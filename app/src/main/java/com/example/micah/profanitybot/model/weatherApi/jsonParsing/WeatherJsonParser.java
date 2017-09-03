@@ -11,8 +11,15 @@ public class WeatherJsonParser {
 
    private final Gson gson = new Gson();
 
-    public WeatherInfo exctractWeatherInfoFrom(String jsonWeatherInfoStringt){
+    /**
+     * returns a WeatherInfo  object created using the specified
+     * jsonWeatherInfoStringby means of Gson parsing
+     *
+     * @param jsonWeatherInfoString
+     * @return
+     */
+    public WeatherInfo exctractWeatherInfoFrom(String jsonWeatherInfoString){
 
-       return gson.fromJson(jsonWeatherInfoStringt, WeatherInfo.class);
+       return gson.fromJson(jsonWeatherInfoString, WeatherInfo.class);
     }
 }

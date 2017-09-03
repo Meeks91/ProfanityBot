@@ -28,7 +28,6 @@ public class MainActivityModule {
 
     public MainActivityModule(Context context) {
 
-        //set the global context
         this.context = context;
     }
 

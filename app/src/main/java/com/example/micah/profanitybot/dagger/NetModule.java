@@ -1,5 +1,6 @@
 package com.example.micah.profanitybot.dagger;
 
+import com.example.micah.profanitybot.gifRetrieval.GifJsonParser;
 import com.example.micah.profanitybot.gifRetrieval.GifRetriever;
 import com.example.micah.profanitybot.model.weatherApi.WeatherApiHelper;
 import com.example.micah.profanitybot.model.weatherApi.jsonParsing.WeatherJsonParser;
@@ -15,16 +16,16 @@ import okhttp3.OkHttpClient;
 @Module
 public class NetModule {
 
-     @Provides
+    @Provides
     public OkHttpClient providesSomething(){
 
         return new OkHttpClient.Builder().build();
     }
 
     @Provides
-    public GifRetriever providesGifRetriever(OkHttpClient okHttpClient){
+    public GifRetriever providesGifRetriever(OkHttpClient okHttpClient, GifJsonParser gifJsonParser){
 
-        return new GifRetriever(okHttpClient);
+        return new GifRetriever(okHttpClient, gifJsonParser);
     }
 
     @Provides
@@ -36,5 +37,10 @@ public class NetModule {
     @Provides WeatherJsonParser provideWeatherJsonParser(){
 
         return new WeatherJsonParser();
+    }
+
+    @Provides GifJsonParser provideGifJsonParser(){
+
+        return new GifJsonParser();
     }
 }

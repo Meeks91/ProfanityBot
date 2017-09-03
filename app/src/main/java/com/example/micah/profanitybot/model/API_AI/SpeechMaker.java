@@ -15,30 +15,33 @@ import ai.api.model.AIResponse;
 public class SpeechMaker {
 
     private final String TAG = SpeechMaker.class.getSimpleName();
+    private final String RECEIVING_PROFOANITY_TOKEN = "Receiving a profanity token";
     private SpeechSynthesiser speechSynthesiser;
     private WeatherApiHelper weatherRetriever;
     private MainActivityViewDelegate mainActivityViewDelegate;
 
     public SpeechMaker(SpeechSynthesiser speechSynthesiser, WeatherApiHelper weatherRetriever, MainActivityViewDelegate mainActivityViewDelegate){
 
-        //set the global onSpeechFinishedDelegate
         this.mainActivityViewDelegate = mainActivityViewDelegate;
 
-        //set the global speechSynthesiser
         this.speechSynthesiser = speechSynthesiser;
 
-        //set the global weatherRetriever
         this.weatherRetriever = weatherRetriever;
     }
 
-    //routes the speech contained in the result to the speech synthesiser. It passes a completion handler to fetch weather data
-    //which is then spoken  - if the type of intent in the result is of the appropriate type
+    /**
+     * routes the speech contained in the result to the speech synthesiser.
+     * It passes a completion handler to fetch weather data which is then spoken
+     * if the @result's intent's name == RECEIVING_PROFOANITY_TOKEN
+     *
+     * @param result - an AIResponse which contains what speech to synthesis
+     *                 and an intent name which notifies us if we should
+     *                 fetch and speak weather data
+     */
     public void routeAiResponseIntoSpeech(AIResponse result) {
 
         //check if we should fetch the weather
-        boolean shouldFetchWeather = result.getResult().getMetadata().getIntentName().equals("Receiving a profanity token");
-
-        Log.d(TAG, "routeAiResponseIntoSpeech: shouldFetchWeather is: " + shouldFetchWeather);
+        boolean shouldFetchWeather = result.getResult().getMetadata().getIntentName().equals(RECEIVING_PROFOANITY_TOKEN);
 
         //speak the current speech and provide a callback value
         speechSynthesiser.convertTextToSpeech(result.getResult().getFulfillment().getSpeech(), createUtterListener(shouldFetchWeather));
@@ -51,14 +54,10 @@ public class SpeechMaker {
         return new UtteranceProgressListener() {
             @Override
             public void onStart(String utteranceId) {
-
-            }
+              }
 
             @Override
             public void onDone(String utteranceId) {
-
-                Log.d(TAG, "UtteranceProgressListener: onDone called");
-
 
                 if (getAndSpeakWeatherOnDone == true) {
 
@@ -71,18 +70,18 @@ public class SpeechMaker {
 
             @Override
             public void onError(String utteranceId) {
-
             }
         };
     }
 
-    //gets the weather data and speaks it once it has been retrieved
+    /**
+     * gets the weather data and speaks it once it has been retrieved
+     */
     private void getAndSpeakWeatherData(){
 
-        //get the weather info
         weatherRetriever.getWeather(weatherInfo -> {
 
+                //speechSynthesiser.convertTextToSpeech(weatherInfo.);
             });
-
     }
 }
