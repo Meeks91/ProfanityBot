@@ -25,7 +25,7 @@ public class SpeechSynthesiser implements  Application.ActivityLifecycleCallback
 
         this.context = context;
 
-        registerForLifeCycleCallbacks();
+        registerForLifecycleCallbacks();
     }
 
     //MARK: -------- INITIALISATION METHODS
@@ -33,7 +33,7 @@ public class SpeechSynthesiser implements  Application.ActivityLifecycleCallback
     /**
      * registers the class to receive lifecycle callbacks.
      */
-    private void registerForLifeCycleCallbacks() {
+    private void registerForLifecycleCallbacks() {
 
         //register the class for callbacks via the Application class
         ((Application) context.getApplicationContext()).registerActivityLifecycleCallbacks(this);
@@ -44,8 +44,6 @@ public class SpeechSynthesiser implements  Application.ActivityLifecycleCallback
      */
     private void initTextToSpeechEngine() {
 
-        Log.d(TAG, "initTextToSpeechEngine() called");
-
         //init the TextToSpeech and create the TextToSpeech.OnInitListener
         //Use application context to avoid textToSpeechEngine leaking out of the activity
         textToSpeechEngine = new TextToSpeech(context.getApplicationContext(), status -> {
@@ -54,7 +52,7 @@ public class SpeechSynthesiser implements  Application.ActivityLifecycleCallback
                 if (status == TextToSpeech.SUCCESS) {
 
                     //set the textToSpeechEngine and get the result
-                    int result = textToSpeechEngine.setLanguage(Locale.US);
+                    int result = textToSpeechEngine.setLanguage(Locale.UK);
 
                     //check if we set the language successfully
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
@@ -129,7 +127,7 @@ public class SpeechSynthesiser implements  Application.ActivityLifecycleCallback
     @Override
     public void onActivityResumed(Activity activity) {
 
-        //init the textToSpeechEngine
+
         initTextToSpeechEngine();
     }
 
@@ -140,9 +138,6 @@ public class SpeechSynthesiser implements  Application.ActivityLifecycleCallback
 
         //stop to the textToSpeechEngine
         stopTheTextToSpeechEngine();
-
-        //unregisters the class from lifecycle callbacks. Need to unregister to stop double registration
-        unregisterFomLifeLifecycleCallbacks();
     }
 
     @Override
@@ -158,5 +153,7 @@ public class SpeechSynthesiser implements  Application.ActivityLifecycleCallback
     @Override
     public void onActivityDestroyed(Activity activity) {
 
+        //unregisters the class from lifecycle callbacks. Need to unregister to stop double registration
+        unregisterFomLifeLifecycleCallbacks();
     }
 }
